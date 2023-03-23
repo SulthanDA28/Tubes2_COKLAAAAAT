@@ -18,9 +18,9 @@ class Test {
                 dfs.SetTSP(false);
                 dfs.FindRoute(dfs.GetRow(), dfs.GetCol(), map, route, tsp);
 
-                if (dfs.GetTSP()) {
-                    route.Reverse();
-                    Console.WriteLine(route);
+                if (tsp.GetStatus() == "Complete") {
+                    tsp.Reverse();
+                    Console.WriteLine(tsp);
                 } else {
                     if (route.GetStatus() == "Complete") {
                         route.Reverse();

@@ -413,7 +413,7 @@ namespace Solve {
             // }
             // Console.WriteLine();
 
-            Console.WriteLine("Current Unreversed " + newTSP);
+            // Console.WriteLine("Current Unreversed " + newTSP);
 
             int prevRow = curRow;
             int prevCol = curCol;
@@ -495,7 +495,7 @@ namespace Solve {
             }
 
             // Console.WriteLine("Reached Dead End...");
-            Console.WriteLine("Final Unreversed " + newTSP);
+            // Console.WriteLine("Final Unreversed " + newTSP);
 
             if (newRoute.GetStatus() != "Complete") {
                 if (curNode.GetSymbol() == 'T') {
