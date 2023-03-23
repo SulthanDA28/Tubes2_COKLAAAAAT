@@ -13,14 +13,13 @@ class Test {
                 Console.WriteLine(map);
                 Route route = new Route();
                 DFS dfs = new DFS(map);
-                TSP tsp = new TSP();
 
-                dfs.SetTSP(false);
-                dfs.FindRoute(dfs.GetRow(), dfs.GetCol(), map, route, tsp);
+                dfs.SetTSP(true);
+                dfs.FindRoute(dfs.GetRow(), dfs.GetCol(), map, route);
 
-                if (tsp.GetStatus() == "Complete") {
-                    tsp.Reverse();
-                    Console.WriteLine(tsp);
+                if (TSP.GetElmt().Count != 0) {
+                    TSP.Print();
+                    TSP.GetElmt().Clear();
                 } else {
                     if (route.GetStatus() == "Complete") {
                         route.Reverse();

@@ -271,6 +271,12 @@ namespace Solve {
             treasure = 0;
             status = "Incomplete";
         }
+        // cctor
+        public Route(Route other) {
+            data = new Stack<char>(other.data);
+            treasure = other.treasure;
+            status = other.status;
+        }
 
         // setter
         public void SetElmt(Stack<char> newData) {
@@ -322,47 +328,26 @@ namespace Solve {
 
     public class TSP {
         // atribut
-        private Stack<char> data;
-        private string status;
-
-        // ctor
-        public TSP() {
-            data = new Stack<char>();
-            status = "Incomplete";
-        }
+        public static Stack<char> data = new Stack<char>();
 
         // setter
-        public void SetElmt(Route route) {
+        public static void SetElmt(Route route) {
             data = route.GetElmt();
         }
-        // setter
-        public void SetStatus(string newStatus) {
-            status = newStatus;
-        }
 
         // getter
-        public Stack<char> GetElmt() {
+        public static Stack<char> GetElmt() {
             return data;
         }
-        // getter
-        public string GetStatus() {
-            return status;
-        }
-        public void Reverse() {
-            Route revRoute = new Route();
-            while (GetElmt().Count != 0) {
-                revRoute.GetElmt().Push(GetElmt().Pop());
-            }
-            SetElmt(revRoute);
-        }
-        public override string ToString() {
+
+        public static void Print() {
             var str = new StringBuilder();
             str.Append("TSP Route: ");
             foreach (char item in GetElmt()) {
                 str.Append(item + "->");
             }
             str.Append("Finished");
-            return str.ToString();
+            Console.WriteLine(str.ToString());
         }
     }
 
@@ -406,14 +391,12 @@ namespace Solve {
         }
 
         // method
-        public void FindRoute(int newRow, int newCol, Map newMap, Route newRoute, TSP newTSP) {
+        public void FindRoute(int newRow, int newCol, Map newMap, Route newRoute) {
             // Console.Write("Unreversed Route: ");
             // foreach (char item in newRoute.GetElmt()) {
             //     Console.Write(item + ",");
             // }
             // Console.WriteLine();
-
-            // Console.WriteLine("Current Unreversed " + newTSP);
 
             int prevRow = curRow;
             int prevCol = curCol;
@@ -429,15 +412,10 @@ namespace Solve {
             }
 
             if ((tsp) && (newRoute.GetStatus() == "Complete")) {
-                if (newTSP.GetStatus() == "Incomplete") {
-                    newTSP.SetElmt(newRoute);
-                    newTSP.SetStatus("Complete");
-                } else {
-                    if (newRoute.GetElmt().Count < newTSP.GetElmt().Count) {
-                        newTSP.SetElmt(newRoute);
-                    }
+                if (TSP.GetElmt().Count == 0 || (newRoute.GetElmt().Count < TSP.GetElmt().Count)) {
+                    Route route = new Route(newRoute);
+                    TSP.SetElmt(route);
                 }
-                Console.WriteLine("New Unreversed " + newTSP);
                 newRoute.SetStatus("Incomplete");
             }
 
@@ -451,7 +429,7 @@ namespace Solve {
                     }
                     newRoute.GetElmt().Push('R');
                     // Console.WriteLine("Adding R to Unreversed Route");
-                    FindRoute(curRow, nextCol, newMap, newRoute, newTSP);
+                    FindRoute(curRow, nextCol, newMap, newRoute);
                 }
             }
             // Console.WriteLine("Checking Down Position");
@@ -464,7 +442,7 @@ namespace Solve {
                     }
                     newRoute.GetElmt().Push('D');
                     // Console.WriteLine("Adding D to Unreversed Route");
-                    FindRoute(nextRow, curCol, newMap, newRoute, newTSP);
+                    FindRoute(nextRow, curCol, newMap, newRoute);
                 }
             }
             // Console.WriteLine("Checking Left Position");
@@ -477,7 +455,7 @@ namespace Solve {
                     }
                     newRoute.GetElmt().Push('L');
                     // Console.WriteLine("Adding L to Unreversed Route");
-                    FindRoute(curRow, nextCol, newMap, newRoute, newTSP);
+                    FindRoute(curRow, nextCol, newMap, newRoute);
                 }
             }
             // Console.WriteLine("Checking Up Position");
@@ -490,12 +468,11 @@ namespace Solve {
                     }
                     newRoute.GetElmt().Push('U');
                     // Console.WriteLine("Adding U to Unreversed Route");
-                    FindRoute(nextRow, curCol, newMap, newRoute, newTSP);
+                    FindRoute(nextRow, curCol, newMap, newRoute);
                 }
             }
 
             // Console.WriteLine("Reached Dead End...");
-            // Console.WriteLine("Final Unreversed " + newTSP);
 
             if (newRoute.GetStatus() != "Complete") {
                 if (curNode.GetSymbol() == 'T') {
