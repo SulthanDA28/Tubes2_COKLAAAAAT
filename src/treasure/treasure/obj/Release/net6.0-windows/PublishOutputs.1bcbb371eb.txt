@@ -1,0 +1,5 @@
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\bin\treasure.exe
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\bin\treasure.dll
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\bin\treasure.deps.json
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\bin\treasure.runtimeconfig.json
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\bin\treasure.pdb
