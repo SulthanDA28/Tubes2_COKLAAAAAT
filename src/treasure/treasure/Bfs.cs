@@ -135,56 +135,99 @@ namespace BFS
 
             }
         }
-        
+        static public List<char> makeRoute(List<List<Node>> paths)
+        {
+            List<char> temp = new List<char>();
+            List<char> route = new List<char>();
+
+            for (int i = 0; i < paths.Count; i++)
+            {
+                for (int j = 0; j < paths[i].Count - 1; j++)
+                {
+                    if (paths[i][j].getX() == paths[i][j + 1].getX())
+                    {
+                        if (paths[i][j].getY() > paths[i][j + 1].getY())
+                        {
+                            temp.Add('D');
+                            route.Add('U');
+                        }
+                        else
+                        {
+                            temp.Add('U');
+                            route.Add('D');
+                        }
+                    }
+                    if (paths[i][j].getY() == paths[i][j + 1].getY())
+                    {
+                        if (paths[i][j].getX() > paths[i][j + 1].getX())
+                        {
+                            temp.Add('R');
+                            route.Add('L');
+                        }
+                        else
+                        {
+                            temp.Add('L');
+                            route.Add('R');
+                        }
+                    }
+                }
+                if (i != paths.Count - 1)
+                {
+                    temp.Reverse();
+                    route.AddRange(temp);
+                }
+            }
+            return route;
+        }
         //static public void Main(String[] args)
         //{
-            //List<List<Node>> paths;
-            //int treasureCount;
+        //List<List<Node>> paths;
+        //int treasureCount;
 
-            //// Testcase dari Spek
-            //Console.WriteLine("Testcase dari Spek");
+        //// Testcase dari Spek
+        //Console.WriteLine("Testcase dari Spek");
 
-            //Graph g1 = new Graph();
-            //readFileForBFS(g1, "../../../tc.txt");
-            //treasureCount = g1.getTreasureCount();
-            //paths = constructPath(bfs(g1, treasureCount));
-            //printAllPath(paths);
+        //Graph g1 = new Graph();
+        //readFileForBFS(g1, "../../../tc.txt");
+        //treasureCount = g1.getTreasureCount();
+        //paths = constructPath(bfs(g1, treasureCount));
+        //printAllPath(paths);
 
-            //// Sampel-1
-            //Console.WriteLine("\nSampel-1");
+        //// Sampel-1
+        //Console.WriteLine("\nSampel-1");
 
-            //Graph g2 = new Graph();
-            //readFileForBFS(g2, "../../../sampel-1.txt");
-            //treasureCount = g2.getTreasureCount();
-            //paths = constructPath(bfs(g2, treasureCount));
-            //printAllPath(paths);
+        //Graph g2 = new Graph();
+        //readFileForBFS(g2, "../../../sampel-1.txt");
+        //treasureCount = g2.getTreasureCount();
+        //paths = constructPath(bfs(g2, treasureCount));
+        //printAllPath(paths);
 
-            //// Sampel-2
-            //Console.WriteLine("\nSampel-2");
+        //// Sampel-2
+        //Console.WriteLine("\nSampel-2");
 
-            //Graph g3 = new Graph();
-            //readFileForBFS(g3, "../../../sampel-2.txt");
-            //treasureCount = g3.getTreasureCount();
-            //paths = constructPath(bfs(g3, treasureCount));
-            //printAllPath(paths);
+        //Graph g3 = new Graph();
+        //readFileForBFS(g3, "../../../sampel-2.txt");
+        //treasureCount = g3.getTreasureCount();
+        //paths = constructPath(bfs(g3, treasureCount));
+        //printAllPath(paths);
 
-            //// Sampel-4
-            //Console.WriteLine("\nSampel-4");
+        //// Sampel-4
+        //Console.WriteLine("\nSampel-4");
 
-            //Graph g4 = new Graph();
-            //readFileForBFS(g4, "../../../sampel-4.txt");
-            //treasureCount = g4.getTreasureCount();
-            //paths = constructPath(bfs(g4, treasureCount));
-            //printAllPath(paths);
+        //Graph g4 = new Graph();
+        //readFileForBFS(g4, "../../../sampel-4.txt");
+        //treasureCount = g4.getTreasureCount();
+        //paths = constructPath(bfs(g4, treasureCount));
+        //printAllPath(paths);
 
-            //// Sampel-5
-            //Console.WriteLine("\nSampel-5");
+        //// Sampel-5
+        //Console.WriteLine("\nSampel-5");
 
-            //Graph g5 = new Graph();
-            //readFileForBFS(g5, "../../../sampel-5.txt");
-            //treasureCount = g5.getTreasureCount();
-            //paths = constructPath(bfs(g5, treasureCount));
-            //printAllPath(paths);
+        //Graph g5 = new Graph();
+        //readFileForBFS(g5, "../../../sampel-5.txt");
+        //treasureCount = g5.getTreasureCount();
+        //paths = constructPath(bfs(g5, treasureCount));
+        //printAllPath(paths);
         //}
     }
 }

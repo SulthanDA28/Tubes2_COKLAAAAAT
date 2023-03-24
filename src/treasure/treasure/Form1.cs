@@ -4,7 +4,9 @@ using System.Security.Policy;
 using System.Windows.Forms;
 using Solve;
 using BFS;
+using System.Text;
 using System.Collections.Generic;
+using System.Data;
 
 namespace treasure
 {
@@ -285,9 +287,9 @@ namespace treasure
             }
             return cari;
         }
-        public async void makeColorMap(List<int[]> cetakMap)
+        public async void makeColorMap(List<int[]> cetakMap, List<char> rutebfs)
         {
-
+            sudahSelesai.sudahselesai = false;
             int banyak = cetakMap.Count;
             int[] tempatK = cariK(GlobalMatriks.matrikschar);
             dataGridView1[tempatK[1], tempatK[0]].Style.BackColor = Color.Blue;
@@ -308,6 +310,7 @@ namespace treasure
             }
             sudahSelesai.sudahselesai = true;
             
+
         }
         
         public async void makeColorMaprutedfs(List<int[]> cetakMap,Solve.Route rute)
@@ -332,11 +335,12 @@ namespace treasure
                 sudahSelesai.sudahselesai = false;
             }
             sudahSelesai.sudahselesai = true;
-            if (sudahSelesai.sudahselesai) {
+            if (sudahSelesai.sudahselesai) 
+            {
                 clearMap(GlobalMatriks.matrikschar);
             List<int[]> list = warnarute(rute.GetElmt());
             makeColorMaprute(list);
-                }
+             }
         }
         public void makeColorMaprute(List<int[]> cetakMap)
         {
@@ -355,6 +359,17 @@ namespace treasure
                 
             }
             
+        }
+        public string buatstringrute(List<char> x)
+        {
+            var str = new StringBuilder();
+            str.Append("Route: ");
+            foreach (char c in x)
+            {
+                str.Append(c + "->");
+            }
+            str.Append("Finised");
+            return str.ToString();
         }
         private void resizeTabelReal()
         {
@@ -410,6 +425,41 @@ namespace treasure
                 {
                     warnain[0] = simpanrute[simpanrute.Count - 1][0];
                     warnain[1] = simpanrute[simpanrute.Count - 1][1] -1;
+                    simpanrute.Add(warnain);
+                }
+            }
+            return simpanrute;
+        }
+        public List<int[]> warnarutebfs(List<char> rute)
+        {
+            int[] tempatK = cariK(GlobalMatriks.matrikschar);
+            List<int[]> simpanrute = new List<int[]>();
+            simpanrute.Add(tempatK);
+            foreach (char c in rute)
+            {
+                int[] warnain = new int[2];
+                if (c == 'R')
+                {
+                    warnain[0] = simpanrute[simpanrute.Count - 1][0];
+                    warnain[1] = simpanrute[simpanrute.Count - 1][1] + 1;
+                    simpanrute.Add(warnain);
+                }
+                else if (c == 'D')
+                {
+                    warnain[0] = simpanrute[simpanrute.Count - 1][0] + 1;
+                    warnain[1] = simpanrute[simpanrute.Count - 1][1];
+                    simpanrute.Add(warnain);
+                }
+                else if (c == 'U')
+                {
+                    warnain[0] = simpanrute[simpanrute.Count - 1][0] - 1;
+                    warnain[1] = simpanrute[simpanrute.Count - 1][1];
+                    simpanrute.Add(warnain);
+                }
+                else if (c == 'L')
+                {
+                    warnain[0] = simpanrute[simpanrute.Count - 1][0];
+                    warnain[1] = simpanrute[simpanrute.Count - 1][1] - 1;
                     simpanrute.Add(warnain);
                 }
             }
@@ -485,16 +535,28 @@ namespace treasure
                 else
                 {
                     clearMap(GlobalMatriks.matrikschar);
+
+                    List<List<Node>> paths;
                     var watch = new System.Diagnostics.Stopwatch();
                     watch.Start();
                     BFS.cariruteBfs.simpanruteBfs = new List<int[]>();
+
                     Graph graph = new Graph();
+
                     BFS.Bfs.readFileForBFS(graph,directFile.directoryfile);
+
                     int jmlhartakarun = graph.getTreasureCount();
-                    BFS.Bfs.bfs(graph,jmlhartakarun);
+
+                   
+                    paths = BFS.Bfs.constructPath(BFS.Bfs.bfs(graph, jmlhartakarun));
+                    List<char> rutebfsreal = BFS.Bfs.makeRoute(paths);
+                    
+
                     watch.Stop();
                     long waktu = watch.ElapsedMilliseconds;
-                    makeColorMap(BFS.cariruteBfs.simpanruteBfs);
+                    makeColorMap(BFS.cariruteBfs.simpanruteBfs,rutebfsreal);
+                    textBox1.Text = buatstringrute(rutebfsreal);
+                    textBox3.Text = rutebfsreal.Count.ToString();
                     textBox2.Text = BFS.cariruteBfs.simpanruteBfs.Count.ToString();
                     textBox4.Text = waktu.ToString();
                 }
