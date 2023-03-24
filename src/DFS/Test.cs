@@ -14,7 +14,7 @@ class Test {
                 Route route = new Route();
                 DFS dfs = new DFS(map);
 
-                dfs.SetTSP(true);
+                dfs.SetTSP(false);
                 dfs.FindRoute(dfs.GetRow(), dfs.GetCol(), map, route);
 
                 if (TSP.GetElmt().Count != 0) {

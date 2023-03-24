@@ -397,11 +397,15 @@ namespace Solve {
 
         // method
         public void FindRoute(int newRow, int newCol, Map newMap, Route newRoute) {
-            // Console.Write("Unreversed Route: ");
-            // foreach (char item in newRoute.GetElmt()) {
-            //     Console.Write(item + ",");
-            // }
-            // Console.WriteLine();
+            Route Copy = new Route(newRoute);
+            Console.Write("Current Route: ");
+            while (Copy.GetElmt().Count != 0) {
+                Console.Write(Copy.GetElmt().Pop());
+                if (Copy.GetElmt().Count != 0) {
+                    Console.Write("->");
+                }
+            }
+            Console.WriteLine();
 
             int prevRow = curRow;
             int prevCol = curCol;
