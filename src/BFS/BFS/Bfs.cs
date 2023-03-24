@@ -126,9 +126,71 @@ class Bfs
         }
     }
 
+    static public void printRoute(List<char> route)
+    {
+        for(int i = 0; i < route.Count; i++)
+        {
+            if(i < route.Count-1)
+            {
+                Console.Write(route[i] + " - ");
+            } 
+            else
+            {
+                Console.Write(route[i]);
+            }
+        }
+        Console.WriteLine();
+    }
+
+    static public List<char> makeRoute(List<List<Node>> paths)
+    {
+        List<char> temp = new List<char>();
+        List<char> route = new List<char>();
+
+        for(int i = 0; i < paths.Count;i++)
+        {
+            for(int j = 0; j < paths[i].Count - 1; j++)
+            {
+                if (paths[i][j].getX() == paths[i][j+1].getX())
+                {
+                    if (paths[i][j].getY() > paths[i][j+1].getY())
+                    {
+                        temp.Add('D');
+                        route.Add('U');
+                    }
+                    else
+                    {
+                        temp.Add('U');
+                        route.Add('D');
+                    }
+                }
+                if(paths[i][j].getY() == paths[i][j + 1].getY())
+                {
+                    if(paths[i][j].getX() > paths[i][j + 1].getX())
+                    {
+                        temp.Add('R');
+                        route.Add('L');
+                    }
+                    else
+                    {
+                        temp.Add('L');
+                        route.Add('R');
+                    }
+                }
+            }
+            if(i != paths.Count - 1)
+            {
+                temp.Reverse();
+                route.AddRange(temp);
+            }
+        }
+        return route;
+    }
+
     static public void Main(String[] args)
     {
         List<List<Node>> paths;
+        List<char> route;
         int treasureCount;
 
         // Testcase dari Spek
@@ -138,6 +200,8 @@ class Bfs
         readFileForBFS(g1, "../../../tc.txt");
         treasureCount = g1.getTreasureCount();
         paths = constructPath(bfs(g1, treasureCount));
+        route = makeRoute(paths);
+        printRoute(route);
         printAllPath(paths);
 
         // Sampel-1
@@ -147,6 +211,8 @@ class Bfs
         readFileForBFS(g2, "../../../sampel-1.txt");
         treasureCount = g2.getTreasureCount();
         paths = constructPath(bfs(g2, treasureCount));
+        route = makeRoute(paths);
+        printRoute(route);
         printAllPath(paths);
 
         // Sampel-2
@@ -156,6 +222,8 @@ class Bfs
         readFileForBFS(g3, "../../../sampel-2.txt");
         treasureCount = g3.getTreasureCount();
         paths = constructPath(bfs(g3, treasureCount));
+        route = makeRoute(paths);
+        printRoute(route);
         printAllPath(paths);
 
         // Sampel-4
@@ -165,6 +233,8 @@ class Bfs
         readFileForBFS(g4, "../../../sampel-4.txt");
         treasureCount = g4.getTreasureCount();
         paths = constructPath(bfs(g4, treasureCount));
+        route = makeRoute(paths);
+        printRoute(route);
         printAllPath(paths);
 
         // Sampel-5
@@ -174,6 +244,8 @@ class Bfs
         readFileForBFS(g5, "../../../sampel-5.txt");
         treasureCount = g5.getTreasureCount();
         paths = constructPath(bfs(g5, treasureCount));
+        route = makeRoute(paths);
+        printRoute(route);
         printAllPath(paths);
     }
 }
