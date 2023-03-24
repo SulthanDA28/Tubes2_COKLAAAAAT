@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#\\treasure\\treasure\\treasure.csproj": {}
+    "D:\\C++\\Sulthan\\Stima\\Tubes2_COKLAAAAAT\\src\\treasure\\treasure\\treasure.csproj": {}
   },
   "projects": {
-    "D:\\C#\\treasure\\treasure\\treasure.csproj": {
+    "D:\\C++\\Sulthan\\Stima\\Tubes2_COKLAAAAAT\\src\\treasure\\treasure\\treasure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\treasure\\treasure\\treasure.csproj",
+        "projectUniqueName": "D:\\C++\\Sulthan\\Stima\\Tubes2_COKLAAAAAT\\src\\treasure\\treasure\\treasure.csproj",
         "projectName": "treasure",
-        "projectPath": "D:\\C#\\treasure\\treasure\\treasure.csproj",
+        "projectPath": "D:\\C++\\Sulthan\\Stima\\Tubes2_COKLAAAAAT\\src\\treasure\\treasure\\treasure.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\treasure\\treasure\\obj\\",
+        "outputPath": "D:\\C++\\Sulthan\\Stima\\Tubes2_COKLAAAAAT\\src\\treasure\\treasure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",

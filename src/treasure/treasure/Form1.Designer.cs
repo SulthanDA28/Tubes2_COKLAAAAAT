@@ -47,6 +47,7 @@
             textBox3 = new TextBox();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
+            checkBox1 = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -55,7 +56,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(40, 228);
+            label3.Location = new Point(40, 251);
             label3.Name = "label3";
             label3.Size = new Size(217, 25);
             label3.TabIndex = 6;
@@ -65,9 +66,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(40, 7);
+            label1.Font = new Font("Freestyle Script", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(83, 12);
             label1.Name = "label1";
-            label1.Size = new Size(115, 25);
+            label1.Size = new Size(153, 43);
             label1.TabIndex = 2;
             label1.Text = "Find Treasure";
             label1.Click += label1_Click;
@@ -83,7 +85,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(168, 277);
+            button2.Location = new Point(168, 295);
             button2.Name = "button2";
             button2.Size = new Size(89, 33);
             button2.TabIndex = 7;
@@ -118,7 +120,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.TREASUREEEE_____;
-            pictureBox1.Location = new Point(13, 35);
+            pictureBox1.Location = new Point(13, 63);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(294, 175);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -140,6 +142,7 @@
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel2.BackColor = SystemColors.Info;
+            panel2.Controls.Add(checkBox1);
             panel2.Controls.Add(textBox5);
             panel2.Controls.Add(dataGridView1);
             panel2.Controls.Add(label7);
@@ -166,7 +169,7 @@
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(40, 277);
+            textBox5.Location = new Point(40, 295);
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(122, 31);
             textBox5.TabIndex = 18;
@@ -174,7 +177,8 @@
             // 
             // dataGridView1
             // 
-            dataGridView1.AllowUserToOrderColumns = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToResizeColumns = false;
             dataGridView1.AllowUserToResizeRows = false;
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -269,6 +273,17 @@
             textBox1.Size = new Size(253, 31);
             textBox1.TabIndex = 9;
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(169, 412);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(67, 29);
+            checkBox1.TabIndex = 19;
+            checkBox1.Text = "TSP";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -306,5 +321,6 @@
         private Label label4;
         protected DataGridView dataGridView1;
         private TextBox textBox5;
+        private CheckBox checkBox1;
     }
 }

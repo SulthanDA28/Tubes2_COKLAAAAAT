@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Ahmad Ghulam Ilham\\.nuget\\packages\\": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHub\\Tubes2_COKLAAAAAT\\DFS\\DFS.csproj",
+      "projectUniqueName": "D:\\C++\\Sulthan\\Stima\\Tubes2_COKLAAAAAT\\src\\DFS\\DFS.csproj",
       "projectName": "DFS",
-      "projectPath": "D:\\GitHub\\Tubes2_COKLAAAAAT\\DFS\\DFS.csproj",
-      "packagesPath": "C:\\Users\\Ahmad Ghulam Ilham\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHub\\Tubes2_COKLAAAAAT\\DFS\\obj\\",
+      "projectPath": "D:\\C++\\Sulthan\\Stima\\Tubes2_COKLAAAAAT\\src\\DFS\\DFS.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "D:\\C++\\Sulthan\\Stima\\Tubes2_COKLAAAAAT\\src\\DFS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Ahmad Ghulam Ilham\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -61,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

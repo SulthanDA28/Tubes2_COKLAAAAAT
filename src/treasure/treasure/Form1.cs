@@ -2,6 +2,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Security.Policy;
 using System.Windows.Forms;
+using Solve;
 
 namespace treasure
 {
@@ -110,13 +111,30 @@ namespace treasure
             carifile.ShowDialog();
             if (carifile.FileName != "")
             {
-                directFile.directoryfile = carifile.FileName;
-                GlobalMatriks.matrikschar = txttoMatrix(carifile.FileName);
-                string getnamafile = Path.GetFileName(carifile.FileName);
-                makeMap(GlobalMatriks.matrikschar);
-                resizeTabelReal();
-                textBox5.Text = getnamafile;
-                textBox5.ReadOnly = true;
+                try
+                {
+                    directFile.directoryfile = carifile.FileName;
+                    GlobalMatriks.matrikschar = txttoMatrix(carifile.FileName);
+                    if (cekvalidMatrix(GlobalMatriks.matrikschar))
+                    {
+                        string getnamafile = Path.GetFileName(carifile.FileName);
+                        makeMap(GlobalMatriks.matrikschar);
+                        makeMap(GlobalMatriks.matrikschar);
+                        resizeTabelReal();
+                        textBox5.Text = getnamafile;
+                        textBox5.ReadOnly = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Input masih ada yang salah");
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("Input file masih salah!");
+                }
+
 
             }
 
@@ -136,19 +154,35 @@ namespace treasure
         {
             dataGridView1.ClearSelection();
         }
+        public bool cekvalidMatrix(char[,] matriks)
+        {
+            for (int i = 0; i < matriks.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriks.GetLength(1); j++)
+                {
+                    if (matriks[i, j] != 'K' && matriks[i, j] != 'T' && matriks[i, j] != 'R' && matriks[i, j] != 'X')
+                    {
+                        return false;
+                        break;
 
+                    }
+                }
+            }
+            return true;
+        }
         public void makeMap(char[,] matriks)
         {
 
             dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
 
             dataGridView1.ColumnHeadersVisible = false;
 
             dataGridView1.RowHeadersVisible = false;
             int row = matriks.GetLength(0);
             int col = matriks.GetLength(1);
-            this.dataGridView1.ColumnCount = col;
-            this.dataGridView1.RowCount = row + 1;
+            dataGridView1.ColumnCount = col;
+            dataGridView1.RowCount = row;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             for (int r = 0; r < row; r++)
             {
@@ -169,6 +203,11 @@ namespace treasure
                     {
                         dataGridView1[c, r].Value = "Treassure";
                     }
+                    else if (matriks[r, c] == 'R')
+                    {
+                        dataGridView1[c, r].Style.BackColor = Color.White;
+                    }
+
                 }
 
             }
@@ -180,6 +219,7 @@ namespace treasure
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
+
         }
         public void clearMap(char[,] matriks)
         {
@@ -207,7 +247,7 @@ namespace treasure
                         dataGridView1[c, r].Style.BackColor = Color.White;
 
                     }
-                    else
+                    else if (matriks[r, c] == 'R')
                     {
                         dataGridView1[c, r].Style.BackColor = Color.White;
                     }
@@ -220,22 +260,51 @@ namespace treasure
                 dataGridView1.Columns[r].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
         }
-
-        public async void makeColorMap(int[,] x)
+        public class sudahSelesai
+        {
+            public static bool sudahselesai = true;
+        }
+        public static int[] cariK(char[,] matriks)
+        {
+            int[] cari = new int[2];
+            int row = matriks.GetLength(0);
+            int col = matriks.GetLength(1); 
+            for(int i = 0;i<row;i++)
+            {
+                for(int j = 0;j<col;j++)
+                {
+                    if (matriks[i,j]=='K')
+                    {
+                        cari[0] = i;
+                        cari[1] = j;
+                        break;
+                    }
+                }
+            }
+            return cari;
+        }
+        public async void makeColorMap(List<int[]> cetakMap)
         {
 
-            int banyak = x.GetLength(1);
+            int banyak = cetakMap.Count;
+            int[] tempatK = cariK(GlobalMatriks.matrikschar);
+            dataGridView1[tempatK[1], tempatK[0] ].Style.BackColor = Color.Blue;
+
+            await Task.Delay(500);
+            dataGridView1[tempatK[1], tempatK[0]].Style.BackColor = Color.LightGreen;
+            
             for (int i = 0; i < banyak; i++)
             {
 
-                dataGridView1[x[0, i], x[1, i]].Style.BackColor = Color.Blue;
+                dataGridView1[cetakMap[i][1], cetakMap[i][0]].Style.BackColor = Color.Blue;
                 if (i > 0)
                 {
-                    dataGridView1[x[0, i - 1], x[1, i - 1]].Style.BackColor = Color.LightGreen;
+                    dataGridView1[cetakMap[i-1][1], cetakMap[i-1][0]].Style.BackColor = Color.LightGreen;
                 }
                 await Task.Delay(500);
-
+                sudahSelesai.sudahselesai = false;
             }
+            sudahSelesai.sudahselesai = true;
         }
         private void resizeTabelReal()
         {
@@ -263,20 +332,87 @@ namespace treasure
         }
         private void button1_Click_1(object sender, EventArgs e)
         {
-            if (radioButton1.Checked && directFile.directoryfile != "")
+            if (radioButton1.Checked && directFile.directoryfile != "" && cekvalidMatrix(GlobalMatriks.matrikschar))
             {
-                clearMap(GlobalMatriks.matrikschar);
-                int[,] color = new int[2, 7] { { 0, 1, 1, 1, 1, 1, 2 }, { 0, 0, 1, 2, 3, 4, 4 } };
+                if (sudahSelesai.sudahselesai == false)
+                {
+                    MessageBox.Show("Belum Selesai Woi");
+                }
+                else
+                {
+                    //clearMap(GlobalMatriks.matrikschar);
+                    if(checkBox1.Checked)
+                    {
+                        var watch = new System.Diagnostics.Stopwatch();
+                        cekRute.simpanrute = new Stack<int[]>();
+                        cekRute.semuarute = new List<int[]>();
+                        watch.Start();
+                        Solve.Matrix matriks = new Solve.Matrix(GlobalMatriks.matrikschar);
+                        Solve.Map map = new Solve.Map(matriks);
+                        Solve.Route rute = new Solve.Route();
+                        Solve.DFS dfs = new Solve.DFS(map);
 
-                makeColorMap(color);
-                textBox1.Text = "R-U-D-R-R-R-U-D-R-R-R-U-D-R-R";
-                textBox2.Text = "11";
-                textBox3.Text = "6";
-                textBox4.Text = "840";
-                textBox1.ReadOnly = true;
-                textBox2.ReadOnly = true;
-                textBox3.ReadOnly = true;
-                textBox4.ReadOnly = true;
+
+                        dfs.SetTSP(true);
+                        dfs.FindRoute(dfs.GetRow(), dfs.GetCol(), map, rute);
+                        watch.Stop();
+                        long waktu = watch.ElapsedMilliseconds;
+                        if (rute.GetStatus() == "Complete")
+                        {
+                            rute.Reverse();
+                            makeColorMap(cekRute.semuarute);
+                            textBox1.Text = rute.ToString();
+                            textBox2.Text = cekRute.semuarute.Count.ToString();
+                            textBox3.Text = rute.GetElmt().Count.ToString();
+                            textBox4.Text = waktu.ToString();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Gak nemu rute mazeh");
+                        }
+
+
+                    }
+                    else
+                    {
+                        var watch = new System.Diagnostics.Stopwatch();
+                        cekRute.simpanrute = new Stack<int[]>();
+                        cekRute.semuarute = new List<int[]>();
+                        watch.Start();
+                        Solve.Matrix matriks = new Solve.Matrix(GlobalMatriks.matrikschar);
+                        Solve.Map map = new Solve.Map(matriks);
+                        Solve.Route rute = new Solve.Route();
+                        Solve.DFS dfs = new Solve.DFS(map);
+                        
+                        
+                        dfs.SetTSP(false);
+                        dfs.FindRoute(dfs.GetRow(),dfs.GetCol(),map,rute);
+                        watch.Stop();
+                        long waktu = watch.ElapsedMilliseconds;
+                        if(rute.GetStatus()=="Complete")
+                        {
+                            rute.Reverse();
+                            makeColorMap(cekRute.semuarute);
+                            textBox1.Text = rute.ToString();
+                            textBox2.Text = cekRute.semuarute.Count.ToString();
+                            textBox3.Text = rute.GetElmt().Count.ToString();
+                            textBox4.Text = waktu.ToString();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Gak nemu rute mazeh");
+                        }
+
+
+
+                    }
+
+                    
+                    textBox1.ReadOnly = true;
+                    textBox2.ReadOnly = true;
+                    textBox3.ReadOnly = true;
+                    textBox4.ReadOnly = true;
+                }
 
             }
 
@@ -318,6 +454,11 @@ namespace treasure
         }
 
         private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
         }

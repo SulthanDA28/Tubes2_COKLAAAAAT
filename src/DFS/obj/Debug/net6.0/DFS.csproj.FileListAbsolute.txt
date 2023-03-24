@@ -1,0 +1,15 @@
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\bin\Debug\net6.0\DFS.exe
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\bin\Debug\net6.0\DFS.deps.json
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\bin\Debug\net6.0\DFS.runtimeconfig.json
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\bin\Debug\net6.0\DFS.dll
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\bin\Debug\net6.0\DFS.pdb
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\obj\Debug\net6.0\DFS.csproj.AssemblyReference.cache
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\obj\Debug\net6.0\DFS.GeneratedMSBuildEditorConfig.editorconfig
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\obj\Debug\net6.0\DFS.AssemblyInfoInputs.cache
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\obj\Debug\net6.0\DFS.AssemblyInfo.cs
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\obj\Debug\net6.0\DFS.csproj.CoreCompileInputs.cache
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\obj\Debug\net6.0\DFS.dll
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\obj\Debug\net6.0\refint\DFS.dll
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\obj\Debug\net6.0\DFS.pdb
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\obj\Debug\net6.0\DFS.genruntimeconfig.cache
+D:\C++\Sulthan\Stima\Tubes2_COKLAAAAAT\src\DFS\obj\Debug\net6.0\ref\DFS.dll

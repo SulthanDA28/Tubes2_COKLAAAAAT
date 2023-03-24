@@ -351,7 +351,11 @@ namespace Solve {
             Console.WriteLine(str.ToString());
         }
     }
-
+    public class cekRute
+    {
+        public static Stack<int[]> simpanrute = new Stack<int[]>();
+        public static List<int[]> semuarute = new List<int[]>();
+    }
     public class DFS {
         // atribut
         private int curRow;
@@ -429,6 +433,11 @@ namespace Solve {
                         newRoute.AddTreasure();
                     }
                     newRoute.GetElmt().Push('R');
+                    int[] simpan = new int[2];
+                    simpan[0] = curRow;
+                    simpan[1] = nextCol;
+                    cekRute.simpanrute.Push(simpan);
+                    cekRute.semuarute.Add(simpan);
                     // Console.WriteLine("Adding R to Unreversed Route");
                     FindRoute(curRow, nextCol, newMap, newRoute);
                 }
@@ -442,6 +451,11 @@ namespace Solve {
                         newRoute.AddTreasure();
                     }
                     newRoute.GetElmt().Push('D');
+                    int[] simpan = new int[2];
+                    simpan[0] = nextRow;
+                    simpan[1] = curCol;
+                    cekRute.simpanrute.Push(simpan);
+                    cekRute.semuarute.Add(simpan);
                     // Console.WriteLine("Adding D to Unreversed Route");
                     FindRoute(nextRow, curCol, newMap, newRoute);
                 }
@@ -455,6 +469,11 @@ namespace Solve {
                         newRoute.AddTreasure();
                     }
                     newRoute.GetElmt().Push('L');
+                    int[] simpan = new int[2];
+                    simpan[0] = curRow;
+                    simpan[1] = nextCol;
+                    cekRute.simpanrute.Push(simpan);
+                    cekRute.semuarute.Add(simpan);
                     // Console.WriteLine("Adding L to Unreversed Route");
                     FindRoute(curRow, nextCol, newMap, newRoute);
                 }
@@ -468,6 +487,11 @@ namespace Solve {
                         newRoute.AddTreasure();
                     }
                     newRoute.GetElmt().Push('U');
+                    int[] simpan = new int[2];
+                    simpan[0] = nextRow;
+                    simpan[1] = curCol;
+                    cekRute.simpanrute.Push(simpan);
+                    cekRute.semuarute.Add(simpan);
                     // Console.WriteLine("Adding U to Unreversed Route");
                     FindRoute(nextRow, curCol, newMap, newRoute);
                 }
@@ -481,6 +505,10 @@ namespace Solve {
                 }
                 if (curNode.GetSymbol() != 'K') {
                     char curChar = newRoute.GetElmt().Pop();
+                    int[] buang = cekRute.simpanrute.Pop();
+
+
+                    cekRute.semuarute.Add(buang);
                     // Console.WriteLine("Removing " + curChar + " from Unreversed Route...");
                 }
                 curNode.SetStatus("Unvisited");
