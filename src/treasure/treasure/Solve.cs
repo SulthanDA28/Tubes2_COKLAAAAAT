@@ -435,6 +435,7 @@ namespace Solve {
                 if (TSP.GetElmt().Count == 0 || (newRoute.GetElmt().Count < TSP.GetElmt().Count)) {
                     Route route = new Route(newRoute);
                     TSP.SetElmt(route);
+                    //cekRute.simpanrute = route.GetElmt();
                 }
                 newRoute.SetStatus("Incomplete");
             }

@@ -3,6 +3,8 @@ using System.Drawing.Drawing2D;
 using System.Security.Policy;
 using System.Windows.Forms;
 using Solve;
+using BFS;
+using System.Collections.Generic;
 
 namespace treasure
 {
@@ -268,12 +270,12 @@ namespace treasure
         {
             int[] cari = new int[2];
             int row = matriks.GetLength(0);
-            int col = matriks.GetLength(1); 
-            for(int i = 0;i<row;i++)
+            int col = matriks.GetLength(1);
+            for (int i = 0; i < row; i++)
             {
-                for(int j = 0;j<col;j++)
+                for (int j = 0; j < col; j++)
                 {
-                    if (matriks[i,j]=='K')
+                    if (matriks[i, j] == 'K')
                     {
                         cari[0] = i;
                         cari[1] = j;
@@ -288,7 +290,32 @@ namespace treasure
 
             int banyak = cetakMap.Count;
             int[] tempatK = cariK(GlobalMatriks.matrikschar);
-            dataGridView1[tempatK[1], tempatK[0] ].Style.BackColor = Color.Blue;
+            dataGridView1[tempatK[1], tempatK[0]].Style.BackColor = Color.Blue;
+
+            await Task.Delay(500);
+            dataGridView1[tempatK[1], tempatK[0]].Style.BackColor = Color.LightGreen;
+
+            for (int i = 0; i < banyak; i++)
+            {
+
+                dataGridView1[cetakMap[i][1], cetakMap[i][0]].Style.BackColor = Color.Blue;
+                if (i > 0)
+                {
+                    dataGridView1[cetakMap[i - 1][1], cetakMap[i - 1][0]].Style.BackColor = Color.LightGreen;
+                }
+                await Task.Delay(500);
+                sudahSelesai.sudahselesai = false;
+            }
+            sudahSelesai.sudahselesai = true;
+            
+        }
+        
+        public async void makeColorMaprutedfs(List<int[]> cetakMap,Solve.Route rute)
+        {
+            sudahSelesai.sudahselesai = false;
+            int banyak = cetakMap.Count;
+            int[] tempatK = cariK(GlobalMatriks.matrikschar);
+            dataGridView1[tempatK[1], tempatK[0]].Style.BackColor = Color.Blue;
 
             await Task.Delay(500);
             dataGridView1[tempatK[1], tempatK[0]].Style.BackColor = Color.LightGreen;
@@ -299,12 +326,35 @@ namespace treasure
                 dataGridView1[cetakMap[i][1], cetakMap[i][0]].Style.BackColor = Color.Blue;
                 if (i > 0)
                 {
-                    dataGridView1[cetakMap[i-1][1], cetakMap[i-1][0]].Style.BackColor = Color.LightGreen;
+                    dataGridView1[cetakMap[i - 1][1], cetakMap[i - 1][0]].Style.BackColor = Color.LightGreen;
                 }
                 await Task.Delay(500);
                 sudahSelesai.sudahselesai = false;
             }
             sudahSelesai.sudahselesai = true;
+            if (sudahSelesai.sudahselesai) {
+                clearMap(GlobalMatriks.matrikschar);
+            List<int[]> list = warnarute(rute.GetElmt());
+            makeColorMaprute(list);
+                }
+        }
+        public void makeColorMaprute(List<int[]> cetakMap)
+        {
+
+            int banyak = cetakMap.Count;
+            
+
+            for (int i = 0; i < banyak; i++)
+            {
+
+                dataGridView1[cetakMap[i][1], cetakMap[i][0]].Style.BackColor = Color.LightGreen;
+                if (i > 0)
+                {
+                    dataGridView1[cetakMap[i - 1][1], cetakMap[i - 1][0]].Style.BackColor = Color.LightGreen;
+                }
+                
+            }
+            
         }
         private void resizeTabelReal()
         {
@@ -330,6 +380,41 @@ namespace treasure
         {
             resizeTabelReal();
         }
+        public List<int[]> warnarute(Stack<char> rute)
+        {
+            int[] tempatK = cariK(GlobalMatriks.matrikschar);
+            List<int[]> simpanrute = new List<int[]>();
+            simpanrute.Add(tempatK);
+            foreach (char c in rute) 
+            {
+                int[] warnain = new int[2]; 
+                if(c=='R')
+                {
+                    warnain[0] = simpanrute[simpanrute.Count - 1][0];
+                    warnain[1] = simpanrute[simpanrute.Count - 1][1]+1;
+                    simpanrute.Add(warnain);
+                }
+                else if (c == 'D')
+                {
+                    warnain[0] = simpanrute[simpanrute.Count - 1][0]+1;
+                    warnain[1] = simpanrute[simpanrute.Count - 1][1];
+                    simpanrute.Add(warnain);
+                }
+                else if (c == 'U')
+                {
+                    warnain[0] = simpanrute[simpanrute.Count - 1][0] - 1;
+                    warnain[1] = simpanrute[simpanrute.Count - 1][1];
+                    simpanrute.Add(warnain);
+                }
+                else if (c == 'L')
+                {
+                    warnain[0] = simpanrute[simpanrute.Count - 1][0];
+                    warnain[1] = simpanrute[simpanrute.Count - 1][1] -1;
+                    simpanrute.Add(warnain);
+                }
+            }
+            return simpanrute;
+        }
         private void button1_Click_1(object sender, EventArgs e)
         {
             if (radioButton1.Checked && directFile.directoryfile != "" && cekvalidMatrix(GlobalMatriks.matrikschar))
@@ -340,80 +425,83 @@ namespace treasure
                 }
                 else
                 {
-                    //clearMap(GlobalMatriks.matrikschar);
-                    if(checkBox1.Checked)
+                    clearMap(GlobalMatriks.matrikschar);
+
+
+
+                    var watch = new System.Diagnostics.Stopwatch();
+                    cekRute.simpanrute = new Stack<int[]>();
+                    cekRute.semuarute = new List<int[]>();
+                    watch.Start();
+                    Solve.Matrix matriks = new Solve.Matrix(GlobalMatriks.matrikschar);
+                    Solve.Map map = new Solve.Map(matriks);
+                    Solve.Route rute = new Solve.Route();
+                    Solve.DFS dfs = new Solve.DFS(map);
+
+
+                    dfs.SetTSP(false);
+                    dfs.FindRoute(dfs.GetRow(), dfs.GetCol(), map, rute);
+                    watch.Stop();
+                    long waktu = watch.ElapsedMilliseconds;
+                    if (rute.GetStatus() == "Complete")
                     {
-                        var watch = new System.Diagnostics.Stopwatch();
-                        cekRute.simpanrute = new Stack<int[]>();
-                        cekRute.semuarute = new List<int[]>();
-                        watch.Start();
-                        Solve.Matrix matriks = new Solve.Matrix(GlobalMatriks.matrikschar);
-                        Solve.Map map = new Solve.Map(matriks);
-                        Solve.Route rute = new Solve.Route();
-                        Solve.DFS dfs = new Solve.DFS(map);
-
-
-                        dfs.SetTSP(true);
-                        dfs.FindRoute(dfs.GetRow(), dfs.GetCol(), map, rute);
-                        watch.Stop();
-                        long waktu = watch.ElapsedMilliseconds;
-                        if (rute.GetStatus() == "Complete")
+                        rute.Reverse();
+                        makeColorMaprutedfs(cekRute.semuarute,rute);
+                        
+                        textBox1.Text = rute.ToString();
+                        textBox2.Text = cekRute.semuarute.Count.ToString();
+                        textBox3.Text = rute.GetElmt().Count.ToString();
+                        textBox4.Text = waktu.ToString();
+                        if(sudahSelesai.sudahselesai)
                         {
-                            rute.Reverse();
-                            makeColorMap(cekRute.semuarute);
-                            textBox1.Text = rute.ToString();
-                            textBox2.Text = cekRute.semuarute.Count.ToString();
-                            textBox3.Text = rute.GetElmt().Count.ToString();
-                            textBox4.Text = waktu.ToString();
+                            List<int[]> list = warnarute(rute.GetElmt());
+                            makeColorMaprute(list);
                         }
-                        else
-                        {
-                            MessageBox.Show("Gak nemu rute mazeh");
-                        }
-
-
+                        
                     }
                     else
                     {
-                        var watch = new System.Diagnostics.Stopwatch();
-                        cekRute.simpanrute = new Stack<int[]>();
-                        cekRute.semuarute = new List<int[]>();
-                        watch.Start();
-                        Solve.Matrix matriks = new Solve.Matrix(GlobalMatriks.matrikschar);
-                        Solve.Map map = new Solve.Map(matriks);
-                        Solve.Route rute = new Solve.Route();
-                        Solve.DFS dfs = new Solve.DFS(map);
-                        
-                        
-                        dfs.SetTSP(false);
-                        dfs.FindRoute(dfs.GetRow(),dfs.GetCol(),map,rute);
-                        watch.Stop();
-                        long waktu = watch.ElapsedMilliseconds;
-                        if(rute.GetStatus()=="Complete")
-                        {
-                            rute.Reverse();
-                            makeColorMap(cekRute.semuarute);
-                            textBox1.Text = rute.ToString();
-                            textBox2.Text = cekRute.semuarute.Count.ToString();
-                            textBox3.Text = rute.GetElmt().Count.ToString();
-                            textBox4.Text = waktu.ToString();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Gak nemu rute mazeh");
-                        }
-
-
-
+                        MessageBox.Show("Gak nemu rute mazeh");
                     }
 
-                    
+
+
+
+
+
                     textBox1.ReadOnly = true;
                     textBox2.ReadOnly = true;
                     textBox3.ReadOnly = true;
                     textBox4.ReadOnly = true;
                 }
 
+            }
+            else if(radioButton2.Checked && directFile.directoryfile != "" && cekvalidMatrix(GlobalMatriks.matrikschar))
+            {
+                if (sudahSelesai.sudahselesai == false)
+                {
+                    MessageBox.Show("Belum Selesai Woi");
+                }
+                else
+                {
+                    clearMap(GlobalMatriks.matrikschar);
+                    var watch = new System.Diagnostics.Stopwatch();
+                    watch.Start();
+                    BFS.cariruteBfs.simpanruteBfs = new List<int[]>();
+                    Graph graph = new Graph();
+                    BFS.Bfs.readFileForBFS(graph,directFile.directoryfile);
+                    int jmlhartakarun = graph.getTreasureCount();
+                    BFS.Bfs.bfs(graph,jmlhartakarun);
+                    watch.Stop();
+                    long waktu = watch.ElapsedMilliseconds;
+                    makeColorMap(BFS.cariruteBfs.simpanruteBfs);
+                    textBox2.Text = BFS.cariruteBfs.simpanruteBfs.Count.ToString();
+                    textBox4.Text = waktu.ToString();
+                }
+                textBox1.ReadOnly = true;
+                textBox2.ReadOnly = true;
+                textBox3.ReadOnly = true;
+                textBox4.ReadOnly = true;
             }
 
         }

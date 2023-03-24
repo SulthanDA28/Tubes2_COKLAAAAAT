@@ -47,7 +47,6 @@
             textBox3 = new TextBox();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
-            checkBox1 = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -142,7 +141,6 @@
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel2.BackColor = SystemColors.Info;
-            panel2.Controls.Add(checkBox1);
             panel2.Controls.Add(textBox5);
             panel2.Controls.Add(dataGridView1);
             panel2.Controls.Add(label7);
@@ -273,17 +271,6 @@
             textBox1.Size = new Size(253, 31);
             textBox1.TabIndex = 9;
             // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(169, 412);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(67, 29);
-            checkBox1.TabIndex = 19;
-            checkBox1.Text = "TSP";
-            checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -321,6 +308,5 @@
         private Label label4;
         protected DataGridView dataGridView1;
         private TextBox textBox5;
-        private CheckBox checkBox1;
     }
 }
