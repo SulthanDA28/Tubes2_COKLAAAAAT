@@ -74,7 +74,7 @@ class Bfs
         {
             if (text[i] == '\n')
             {
-                y--;
+                y++;
                 x = 0;
             }
             if (text[i] == 'T' || text[i] == 'R' || text[i] == 'K')
@@ -83,7 +83,7 @@ class Bfs
             }
             if (text[i] == 'T' || text[i] == 'R' || text[i] == 'K' || text[i] == 'X')
             {
-                x--;
+                x++;
             }
         }
 
