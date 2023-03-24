@@ -1,2 +1,6 @@
 *.vscode
 *.exe
+*.assets.cache
+*.editorconfig
+src/DFS/obj/Debug/net6.0/DFS.assets.cache
+src/DFS/obj/Debug/net6.0/DFS.GeneratedMSBuildEditorConfig.editorconfig
